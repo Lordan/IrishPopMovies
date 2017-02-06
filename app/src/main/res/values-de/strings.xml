@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_connection">Keine Netzwerkverbindung!</string>
+    <string name="popular">Beliebteste</string>
+    <string name="top_rated">Best Bewertete</string>
+    <string name="failed_loading">Doof, das Film Daten Laden ging irgendwie schief!</string>
+</resources>
