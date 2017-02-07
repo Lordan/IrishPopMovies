@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements MoviesRecyclerVie
     private RecyclerView movieRecyclerView;
     private MoviesRecyclerViewAdapter moviesRVAdapter;
 
+    private final static String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements MoviesRecyclerVie
         movieRecyclerView = (RecyclerView)findViewById(R.id.movie_rv);
         movieRecyclerView.setLayoutManager(moviesGridLayout);
 
-        //setting an adapter with empty data set, will be populated in asyn post execute
+        //setting an adapter with empty data set, will be populated in async post execute
         moviesList = new ArrayList<>();
         moviesRVAdapter = new MoviesRecyclerViewAdapter(context, moviesList);
         movieRecyclerView.setAdapter(moviesRVAdapter);
@@ -101,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements MoviesRecyclerVie
         if (NetworkUtils.isOnline(context)) {
 
             URL movieApiUrl = NetworkUtils.buildTmdbApiUrl(sortCriteria);
+            Log.d(TAG, ".requestMovieData(): tmdb query url: " + movieApiUrl.toString());
             new MovieDbApiQueryTask().execute(movieApiUrl);
         }
         else {
@@ -121,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements MoviesRecyclerVie
             } catch (IOException e) {
                 // that can't be good, let us inform the user with a nice toast
                 makeToast(R.string.failed_loading, Toast.LENGTH_SHORT);
+                Log.e(TAG, ".doInBackground(): Movie db query failed: " + e.getMessage());
                 e.printStackTrace();
                 // we should do something about it, e.g. retry but not for stage 1
             }
@@ -131,11 +135,14 @@ public class MainActivity extends AppCompatActivity implements MoviesRecyclerVie
         protected void onPostExecute(String movieApiResults) {
 
             ArrayList<Movie> tmpMoviesList = new ArrayList<>();
+
+            Log.d(TAG, ".onPostExecute(): tmdb result: " + movieApiResults);
             if (movieApiResults != null && !movieApiResults.equals("")) {
                 MoviesFromJSONResult.parseMovieJSONResult(movieApiResults, tmpMoviesList);
             }
             // Only replace existing list of movies if we got new movies back
             if (tmpMoviesList.size() == 0) {
+                Log.e(TAG, ".onPostExecute(): empty movie array returned from parser.");
                 makeToast(R.string.failed_loading, Toast.LENGTH_SHORT);
             }
             else {

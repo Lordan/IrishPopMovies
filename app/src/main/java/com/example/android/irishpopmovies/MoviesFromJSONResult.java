@@ -1,5 +1,7 @@
 package com.example.android.irishpopmovies;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +25,8 @@ public class MoviesFromJSONResult {
     private final static String RATING = "vote_average";
     private final static String RELEASE_DATE = "release_date";
 
+    private final static String TAG = "MoviesFromJSONResult";
+
 
     /**
      *  This method takes a JSON string, extracts the results array and
@@ -37,9 +41,12 @@ public class MoviesFromJSONResult {
         try {
             // Create the root JSONObject from the JSON string.
             JSONObject jsonRootObject = new JSONObject(jsonResult);
+            Log.d(TAG, ".parseMovieJSONResult(): object parsed from JSON: " + jsonRootObject.toString());
 
             //Get the instance of JSONArray that contains JSONObjects
             JSONArray jsonArray = jsonRootObject.optJSONArray(RESULT_ARRAY);
+
+            Log.d(TAG, ".parseMovieJSONResult(): array parsed from JSON has length " + jsonArray.length());
 
             //Iterate the jsonArray and print the info of JSONObjects
             for(int i=0; i < jsonArray.length(); i++){
@@ -53,11 +60,15 @@ public class MoviesFromJSONResult {
                 float rating = Float.parseFloat(jsonObject.optString(RATING).toString());
                 String releaseDate = jsonObject.optString(RELEASE_DATE).toString();
 
+
+                Log.d(TAG, ".parseMovieJSONResult(): movie id " + id + " title " + title);
+
                 newMovie = new Movie(id, title, posterPath, plotSynopsis, rating, releaseDate);
                 moviesList.add(newMovie);
             }
+            Log.d(TAG, ".parseMovieJSONResult(): JSON parsed to movie array of length" + moviesList.size());
         } catch (JSONException e) {
-
+            Log.e(TAG, ".parseMovieJSONResult(): JSON parsing failed: " + e.getMessage());
             e.printStackTrace();
         }
     }

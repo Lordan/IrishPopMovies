@@ -2,6 +2,7 @@ package com.example.android.irishpopmovies;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,13 @@ public class MoviesRecyclerViewAdapter extends RecyclerView.Adapter<MoviesRecycl
     private ItemClickListener clickListener;
     private Context context;
 
+    private final static String TAG = "MoviesRecyclerVA";
+
     //should be dynamic on device width, not for stage 1
     private final static  String SIZE_CRITERIA = "w185";
 
     public MoviesRecyclerViewAdapter(Context context, ArrayList<Movie> moviesList) {
+        Log.d(TAG, "(): movie array received with length " + moviesList.size());
         this.inflater = LayoutInflater.from(context);
         this.moviesList = moviesList;
         this.context = context;
@@ -44,7 +48,9 @@ public class MoviesRecyclerViewAdapter extends RecyclerView.Adapter<MoviesRecycl
     public void onBindViewHolder(ViewHolder holder, int position) {
         Movie newMovie = moviesList.get(position);
         holder.viewHolderMovie = newMovie;
+        Log.d(TAG, ".onBindViewHolder(): movie poster path: " + newMovie.posterPath);
         String posterUrl = NetworkUtils.buildTmdbImageUrl(SIZE_CRITERIA, newMovie.posterPath).toString();
+        Log.d(TAG, ".onBindViewHolder(): movie poster url: " + posterUrl);
         Picasso.with(context).load(posterUrl).into(holder.movieView);
     }
 
@@ -85,6 +91,7 @@ public class MoviesRecyclerViewAdapter extends RecyclerView.Adapter<MoviesRecycl
      * @param newMovies The new data set
      */
     public void swapData(ArrayList<Movie> newMovies) {
+        Log.d(TAG, ".swapData(): new movie array received with length " + newMovies.size());
         moviesList = newMovies;
         notifyDataSetChanged();
     }
