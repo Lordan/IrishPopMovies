@@ -28,7 +28,6 @@ public class NetworkUtils {
             "http://image.tmdb.org/t/p";
 
     private final static String PARAM_API_KEY = "api_key";
-
     private final static String TMDB_API_KEY = BuildConfig.API_KEY;
 
     public static boolean isOnline(Context context) {
