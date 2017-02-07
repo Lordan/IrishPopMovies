@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements MoviesRecyclerVie
             sortCriteria = NetworkUtils.POPULAR;
         }
         else {
-            //get stored sort criteria or use default vaulue if not available
+            //get stored sort criteria or use default value if not available
             sortCriteria= savedInstanceState.getString(SORT_CRITERIA_TAG, NetworkUtils.POPULAR);
         }
 
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements MoviesRecyclerVie
         movieRecyclerView.setLayoutManager(moviesGridLayout);
 
         //setting an adapter with empty data set, will be populated in asyn post execute
+        moviesList = new ArrayList<>();
         moviesRVAdapter = new MoviesRecyclerViewAdapter(context, moviesList);
         movieRecyclerView.setAdapter(moviesRVAdapter);
 
