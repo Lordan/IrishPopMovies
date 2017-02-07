@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_details"
     android:layout_width="match_parent"
@@ -10,4 +11,90 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.android.irishpopmovies.DetailsActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_gallery"
+        android:layout_alignParentTop="true"
+        android:id="@+id/iv_movie_poster" />
+
+    <TextView
+        android:text="@string/movie_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/iv_movie_poster"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:id="@+id/tv_movie_title"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_rating"
+        android:text="@string/movie_rating"
+        android:layout_alignBottom="@+id/iv_movie_poster"
+        android:layout_alignLeft="@+id/tv_movie_title"
+        android:layout_alignStart="@+id/tv_movie_title"
+        android:layout_toStartOf="@+id/tv_movie_rating"
+        android:textAlignment="viewStart" />
+
+    <TextView
+        android:text="@string/movie_release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:id="@+id/tv_release_date"
+        android:layout_below="@+id/tv_rating"
+        android:layout_alignLeft="@+id/tv_rating"
+        android:layout_alignStart="@+id/tv_rating"
+        android:layout_toStartOf="@+id/tv_movie_release_date" />
+
+    <TextView
+        android:text="@string/movie_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_rating"
+        android:id="@+id/tv_movie_rating"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="@string/movie_release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_release_date"
+        android:layout_alignLeft="@+id/tv_movie_rating"
+        android:layout_alignStart="@+id/tv_movie_rating"
+        android:id="@+id/tv_movie_release_date"
+        android:textAlignment="viewStart"
+        android:layout_above="@+id/tv_plot" />
+
+    <TextView
+        android:text="@string/movie_plot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_release_date"
+        android:layout_marginTop="23dp"
+        android:id="@+id/tv_plot"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textAlignment="viewStart"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text=" "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_plot"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tv_movie_plot"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

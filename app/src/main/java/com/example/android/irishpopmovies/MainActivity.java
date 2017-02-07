@@ -5,30 +5,29 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.android.irishpopmovies.utils.NetworkUtils;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import static com.example.android.irishpopmovies.R.styleable.View;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MoviesRecyclerViewAdapter.ItemClickListener {
 
     private Context context;
-    private ArrayList<Movie> moviesList:
+    private ArrayList<Movie> moviesList;
     private String SORT_CRITERIA_TAG = "sortCriteria";
     private String sortCriteria;
+    private GridLayoutManager moviesGridLayout;
+    private RecyclerView movieRecyclerView;
+    private MoviesRecyclerViewAdapter moviesRVAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
             //get stored sort criteria or use default vaulue if not available
             sortCriteria= savedInstanceState.getString(SORT_CRITERIA_TAG, NetworkUtils.POPULAR);
         }
+
+        moviesGridLayout = new GridLayoutManager(context, 4);
+
+        movieRecyclerView = (RecyclerView)findViewById(R.id.movie_rv);
+        movieRecyclerView.setLayoutManager(moviesGridLayout);
+
+        //setting an adapter with empty data set, will be populated in asyn post execute
+        moviesRVAdapter = new MoviesRecyclerViewAdapter(context, moviesList);
+        movieRecyclerView.setAdapter(moviesRVAdapter);
 
         requestMovieData(sortCriteria);
     }
@@ -74,29 +82,18 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO change to actual container
-    /*private TextView movieTextView;
+    @Override
+    public void onItemClick(View view, int position) {
 
-    movieTextView.setOnClickListener(new OnClickListener() {
+        Class DetailsActivity = DetailsActivity.class;
 
-        *//**
-         * The onClick method is triggered when the view (TODO) is selected
-         *
-         * @param v The view that is clicked. In this case, it's TODO.
-         *//*
-        @Override
-        public void onClick (View v){
+        Intent startDetailsActivityIntent = new Intent(context, DetailsActivity);
 
-            Class DetailsActivity = DetailsActivity.class;
+        Movie clickedMovie = moviesRVAdapter.getItem(position);
+        startDetailsActivityIntent.putExtra(Movie.PARCABLE_MOVIE_TAG, clickedMovie);
 
-            Intent startDetailsActivityIntent = new Intent(context, DetailsActivity);
-
-            //TODO add movie object
-            startDetailsActivityIntent.putExtra(Movie.PARCABLE_MOVIE_TAG, textEntered);
-
-            startActivity(startDetailsActivityIntent);
-        }
-    }*/
+        startActivity(startDetailsActivityIntent);
+    }
 
     private void requestMovieData(String sortCriteria) {
 
@@ -131,39 +128,20 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String movieApiResults) {
+
+            ArrayList<Movie> tmpMoviesList = new ArrayList<>();
             if (movieApiResults != null && !movieApiResults.equals("")) {
-                parseMovieJSONResult(movieApiResults);
+                MoviesFromJSONResult.parseMovieJSONResult(movieApiResults, tmpMoviesList);
             }
-            else {
+            // Only replace existing list of movies if we got new movies back
+            if (tmpMoviesList.size() == 0) {
                 makeToast(R.string.failed_loading, Toast.LENGTH_SHORT);
             }
-    }
-
-    private void parseMovieJSONResult( String jsonResult) {
-
-        try {
-            // Create the root JSONObject from the JSON string.
-            JSONObject  jsonRootObject = new JSONObject(jsonResult);
-
-            //Get the instance of JSONArray that contains JSONObjects
-            JSONArray jsonArray = jsonRootObject.optJSONArray("CHANGEME");//TODO put in id for array of movies
-
-            //Iterate the jsonArray and print the info of JSONObjects
-            for(int i=0; i < jsonArray.length(); i++){
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                //TODO set correct ids
-                int id = Integer.parseInt(jsonObject.optString("CHANGEME").toString());
-                String name = jsonObject.optString("CHANGEME").toString();
-                float salary = Float.parseFloat(jsonObject.optString("CHANGEME").toString());
-                //make movie objects and put them in an arraylist
+            else {
+                moviesList = tmpMoviesList;
+                moviesRVAdapter.swapData(moviesList);
             }
-        } catch (JSONException e) {
-            makeToast(R.string.failed_loading, Toast.LENGTH_SHORT);
-            e.printStackTrace();
-        }
     }
-
 }
 
     private void makeToast(int textId, int duration) {

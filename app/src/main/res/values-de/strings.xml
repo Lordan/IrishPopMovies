@@ -4,4 +4,8 @@
     <string name="popular">Beliebteste</string>
     <string name="top_rated">Best Bewertete</string>
     <string name="failed_loading">Doof, das Film Daten Laden ging irgendwie schief!</string>
+    <string name="movie_rating">Bewertung:</string>
+    <string name="movie_release_date">Erscheinungsdatum:</string>
+    <string name="movie_plot">Handlung:</string>
+    <string name="movie_title">Titel</string>
 </resources>

@@ -66,7 +66,7 @@ public class NetworkUtils {
      * @param posterPath The id for the poster
      * @return The URL to use to query TMDB for movie posters
      */
-    public static URL buildTmdbApiUrl(String sizeCriteria, String posterPath) {
+    public static URL buildTmdbImageUrl(String sizeCriteria, String posterPath) {
         Uri builtUri = Uri.parse(TMDB_IMAGE_BASE_URL).buildUpon()
                 .appendPath(sizeCriteria)
                 .appendPath(posterPath)

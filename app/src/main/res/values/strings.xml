@@ -4,4 +4,8 @@
     <string name="popular">Most popular</string>
     <string name="top_rated">Top rated</string>
     <string name="failed_loading">SHOOT, that movie data loading thing totally failed!</string>
+    <string name="movie_rating">rating:</string>
+    <string name="movie_release_date">release date:</string>
+    <string name="movie_plot">plot:</string>
+    <string name="movie_title">Title</string>
 </resources>
