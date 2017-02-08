@@ -46,8 +46,6 @@ public class MoviesFromJSONResult {
             //Get the instance of JSONArray that contains JSONObjects
             JSONArray jsonArray = jsonRootObject.optJSONArray(RESULT_ARRAY);
 
-            Log.d(TAG, ".parseMovieJSONResult(): array parsed from JSON has length " + jsonArray.length());
-
             //Iterate the jsonArray and print the info of JSONObjects
             for(int i=0; i < jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -59,9 +57,6 @@ public class MoviesFromJSONResult {
                 String title = jsonObject.optString(TITLE).toString();
                 float rating = Float.parseFloat(jsonObject.optString(RATING).toString());
                 String releaseDate = jsonObject.optString(RELEASE_DATE).toString();
-
-
-                Log.d(TAG, ".parseMovieJSONResult(): movie id " + id + " title " + title);
 
                 newMovie = new Movie(id, title, posterPath, plotSynopsis, rating, releaseDate);
                 moviesList.add(newMovie);

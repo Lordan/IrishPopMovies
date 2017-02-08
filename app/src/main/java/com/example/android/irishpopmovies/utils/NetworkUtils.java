@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 
+import com.example.android.irishpopmovies.BuildConfig;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -66,10 +68,9 @@ public class NetworkUtils {
      * @param posterPath The id for the poster
      * @return The URL to use to query TMDB for movie posters
      */
-    public static URL buildTmdbImageUrl(String sizeCriteria, String posterPath) {
+    public static String buildTmdbImageUrlString(String sizeCriteria, String posterPath) {
         Uri builtUri = Uri.parse(TMDB_IMAGE_BASE_URL).buildUpon()
                 .appendPath(sizeCriteria)
-                .appendPath(posterPath)
                 .build();
 
         URL url = null;
@@ -79,7 +80,7 @@ public class NetworkUtils {
             e.printStackTrace();
         }
 
-        return url;
+        return url.toString() + posterPath;
     }
 
     /**

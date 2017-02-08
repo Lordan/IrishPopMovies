@@ -48,8 +48,7 @@ public class MoviesRecyclerViewAdapter extends RecyclerView.Adapter<MoviesRecycl
     public void onBindViewHolder(ViewHolder holder, int position) {
         Movie newMovie = moviesList.get(position);
         holder.viewHolderMovie = newMovie;
-        Log.d(TAG, ".onBindViewHolder(): movie poster path: " + newMovie.posterPath);
-        String posterUrl = NetworkUtils.buildTmdbImageUrl(SIZE_CRITERIA, newMovie.posterPath).toString();
+        String posterUrl = NetworkUtils.buildTmdbImageUrlString(SIZE_CRITERIA, newMovie.posterPath);
         Log.d(TAG, ".onBindViewHolder(): movie poster url: " + posterUrl);
         Picasso.with(context).load(posterUrl).into(holder.movieView);
     }

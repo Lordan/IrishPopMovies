@@ -36,11 +36,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_rating"
         android:text="@string/movie_rating"
-        android:layout_alignBottom="@+id/iv_movie_poster"
         android:layout_alignLeft="@+id/tv_movie_title"
         android:layout_alignStart="@+id/tv_movie_title"
         android:layout_toStartOf="@+id/tv_movie_rating"
-        android:textAlignment="viewStart" />
+        android:textAlignment="viewStart"
+        android:layout_below="@+id/tv_movie_title"
+        android:layout_marginTop="12dp" />
 
     <TextView
         android:text="@string/movie_release_date"
@@ -77,7 +78,7 @@
         android:text="@string/movie_plot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_release_date"
+        android:layout_below="@+id/iv_movie_poster"
         android:layout_marginTop="23dp"
         android:id="@+id/tv_plot"
         android:layout_alignParentRight="true"

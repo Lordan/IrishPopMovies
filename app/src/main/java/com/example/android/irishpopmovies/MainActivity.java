@@ -40,10 +40,12 @@ public class MainActivity extends AppCompatActivity implements MoviesRecyclerVie
         if(savedInstanceState == null) {
             // no saved instance state, default to 'popular'
             sortCriteria = NetworkUtils.POPULAR;
+            Log.d(TAG, ".onCreate(): No saved state, setting default sort criteria.");
         }
         else {
             //get stored sort criteria or use default value if not available
             sortCriteria= savedInstanceState.getString(SORT_CRITERIA_TAG, NetworkUtils.POPULAR);
+            Log.d(TAG, ".onCreate(): Saved state found, setting sort criteria to " + sortCriteria);
         }
 
         moviesGridLayout = new GridLayoutManager(context, 4);
@@ -55,9 +57,12 @@ public class MainActivity extends AppCompatActivity implements MoviesRecyclerVie
         moviesList = new ArrayList<>();
         moviesRVAdapter = new MoviesRecyclerViewAdapter(context, moviesList);
         movieRecyclerView.setAdapter(moviesRVAdapter);
+        moviesRVAdapter.setClickListener(this);
 
         requestMovieData(sortCriteria);
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,12 +81,14 @@ public class MainActivity extends AppCompatActivity implements MoviesRecyclerVie
         int clickedItemId = item.getItemId();
         switch (clickedItemId) {
             case R.id.action_popular:
-                requestMovieData(NetworkUtils.POPULAR);
+                sortCriteria = NetworkUtils.POPULAR;
                 break;
             case R.id.action_top_rated:
-                requestMovieData(NetworkUtils.TOP_RATED);
+                sortCriteria = NetworkUtils.TOP_RATED;
                 break;
         }
+
+        requestMovieData(sortCriteria);
         return super.onOptionsItemSelected(item);
     }
 

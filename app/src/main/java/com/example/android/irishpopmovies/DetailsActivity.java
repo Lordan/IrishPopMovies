@@ -25,7 +25,7 @@ public class DetailsActivity extends AppCompatActivity {
     private Context context;
 
     //should be dynamic on device width, not for stage 1
-    private final static  String SIZE_CRITERIA = "w185";
+    private final static  String SIZE_CRITERIA = "w500";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class DetailsActivity extends AppCompatActivity {
 
             Movie movie = callerIntent.getParcelableExtra(Movie.PARCABLE_MOVIE_TAG);
 
-            String posterUrl = NetworkUtils.buildTmdbImageUrl(SIZE_CRITERIA, movie.posterPath).toString();
+            String posterUrl = NetworkUtils.buildTmdbImageUrlString(SIZE_CRITERIA, movie.posterPath).toString();
             Picasso.with(context).load(posterUrl).into(poster);
 
             title.setText(movie.title);
